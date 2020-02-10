@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>Create reply </h1>
+<h3>There is you may create reply</h3>
+<form class="form-horizontal" method="post"   enctype="multipart/form-data"
+          action="{% url 'reply-create'  1 %}" >
+
+     {% csrf_token %}
+    {{ form.as_p }}
+    <div class="form-group">
+        <div class="panel  col-sm-5">
+            <div class="panel-footer col-sm-offset-5">
+                <input type="submit" value="Save" name="add_button" class="btn btn-primary"/>
+                <a type="button" href="{% url 'home' %}" name="cancel" class="btn btn-link"
+                   value="Скасувати">Cancel
+                </a>
+            </div>
+        </div>
+    </div>
+</form>
+
+{% endblock content %}

@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block content %}
+     <h1>Post</h1>
+
+<div class="card" style="width: 40rem;">
+  <img class="card-img-top" src="..." alt="Card image cap">
+  <div class="card-body">
+    <h5 class="card-title">{{ post.title }}</h5>
+    <p class="card-text">{{ post.get_content_as_markdown }}</p>
+    <a href="{% url 'home' %}" class="btn btn-primary">Return for news</a>
+  </div>
+</div>
+{% if request.user.is_authenticated %}
+<br>
+<div>
+  <a type="button" class="btn btn-primary" href="{% url 'reply-create' post.id %}">Add reply
+    {{post.id }}</a>
+</div>
+<br>
+{% endif %}
+<div>
+  {% for reply in post.replies.all %}
+  <div class="card col-md-4">
+    <div class="card-header text-white bg-dark py-2 px-3"></div>
+      <div class="card-body p-3">
+        <div class="row mb-4">
+          <div class="col-md-2">
+            <small>{{ reply.created}}</small>
+            <br>
+              {{ reply.author }}
+          </div>
+            <div class="col-md-4">
+              {{ reply.content }}
+            </div>
+        </div>
+      </div>
+  </div>
+<br>
+<br>
+</div>
+
+{% endfor %}
+{% endblock content %}

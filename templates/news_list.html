@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block content %}
+<main role="main">
+ <!-- Main jumbotron for a primary marketing message or call to action -->
+  <div class="jumbotron">
+    <div class="container">
+      <h1 class="display-3">World news!</h1>
+      <p>This is your window into the world</p>
+      <p><a class="btn btn-primary btn-lg" href="{% url 'post-create' %}" role="button">Create post
+          &raquo;</a></p>
+    </div>
+  </div>
+
+  <div class="container">
+    <!-- Example row of columns -->
+    <div class="row">
+      {% for post in post_list %}
+      <div class="col-md-4">
+        <h4>{{ post.title }}</h4>
+        <h6>{{ post.category.category }}</h6>
+        <p class="title-content">{{ post.get_content_as_markdown| slice:":200" }}</p>
+        <p><a class="btn btn-secondary" href="{% url 'post-detail' post.id %}" role="button">View
+            details &raquo;</a></p>
+      </div>
+      {% endfor %}
+
+    </div>
+
+    <hr>
+
+  </div> <!-- /container -->
+
+
+</main>
+{% endblock content %}
+{% block css %}
+<style>
+
+</style>
+{% endblock css %}
+
