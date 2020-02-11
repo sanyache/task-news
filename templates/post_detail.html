@@ -8,14 +8,15 @@
   <div class="card-body">
     <h5 class="card-title">{{ post.title }}</h5>
     <p class="card-text">{{ post.get_content_as_markdown }}</p>
+    <br>
+    <p>{{ post.author }}</p>
     <a href="{% url 'home' %}" class="btn btn-primary">Return for news</a>
   </div>
 </div>
 {% if request.user.is_authenticated %}
 <br>
 <div>
-  <a type="button" class="btn btn-primary" href="{% url 'reply-create' post.id %}">Add reply
-    {{post.id }}</a>
+  <a type="button" class="btn btn-primary" href="{% url 'reply-create' post.id %}">Add reply</a>
 </div>
 <br>
 {% endif %}

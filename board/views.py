@@ -60,13 +60,23 @@ class ReplyCreate(LoginRequiredMixin, CreateView):
     model = Reply
     template_name = 'reply_create.html'
     fields = ('content', )
-    pk_url_kwarg = 'pk'
+    pk = ''
 
     def get_success_url(self):
-        return ('home')
+        return reverse('post-detail', kwargs={'pk': ReplyCreate.pk})
+
+    def get_context_data(self, **kwargs):
+        context = super(ReplyCreate, self).get_context_data(**kwargs)
+        context['pk'] = self.kwargs['pk']
+        ReplyCreate.pk = self.kwargs['pk']
+
+        return context
 
     def form_valid(self, form):
         obj = form.save(commit=False)
-        post = Post.objects.get(id=self.pk_url_kwarg)
+        post = Post.objects.get(id=ReplyCreate.pk)
         obj.post = post
+        user = self.request.user
+        myuser = MyUser.objects.get(user=user)
+        obj.author = myuser
         return super().form_valid(form)

@@ -3,7 +3,8 @@ from django.utils import timezone
 from accounts.models import MyUser
 from markdown import markdown
 from django.utils.html import mark_safe
-
+from django.db.models import signals
+from .tasks import send_async_message_reply
 # Create your models here.
 
 
@@ -53,4 +54,9 @@ class Reply(News):
     def __str__(self):
         return "{}".format(self.author)
 
+
+def reply_post_save(sender, instance, *args, **kwargs):
+    send_async_message_reply.delay(instance.pk)
+
+signals.post_save.connect(reply_post_save, sender=Reply)
 
