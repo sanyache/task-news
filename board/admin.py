@@ -15,6 +15,8 @@ class PostAdmin(admin.ModelAdmin):
     model = Post
     list_display = ('author', 'get_category', 'title', 'is_approve', 'created')
     list_display_links = ('author', 'title')
+    list_filter = ('author', 'is_approve', 'get_category')
+    list_filter = ('author', 'is_approve', 'category')
     inlines = [ReplyInLine]
 
     def get_category(self, obj):
